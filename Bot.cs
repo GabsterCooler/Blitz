@@ -47,9 +47,6 @@ namespace Application
             Position closestPort = new Position();
             double closestDistance = 0;
 
-            foreach(var indexPort in portsVisites)
-                ports.RemoveAt(indexPort);
-
             Console.WriteLine($"x : {tick.CurrentLocation.Column} et y : {tick.CurrentLocation.Row}");
 
             foreach(var direction in ports)
@@ -57,8 +54,10 @@ namespace Application
                 double distance = Math.Sqrt(Math.Pow(Math.Abs(direction.Column - tick.CurrentLocation.Column), 2) + Math.Pow(Math.Abs(direction.Row - tick.CurrentLocation.Row), 2));
                 if(distance < closestDistance || closestDistance == 0)
                 {
-                    closestPort = direction;
-                    closestDistance = distance;
+                    if (!tick.VisitedPortIndices.Contains(ports.IndexOf(direction))) {
+                        closestPort = direction;
+                        closestDistance = distance;
+                    }
                 }
             }
 
