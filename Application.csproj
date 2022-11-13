@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp6.0</TargetFramework>
+    <StartupObject>Application.Application</StartupObject>
+    <OutputType>exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Content Remove="__MACOSX\**" />
+    <Compile Remove="__MACOSX\**" />
+    <EmbeddedResource Remove="__MACOSX\**" />
+    <None Remove="__MACOSX\**" />
+  </ItemGroup>
+</Project>
