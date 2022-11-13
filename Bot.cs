@@ -36,6 +36,9 @@ namespace Application
 
         private Position FindClosestPort(Tick tick)
         {
+            if(tick.VisitedPortIndices.Count == 11)
+                return tick.Map.Ports[tick.VisitedPortIndices[0]];
+
             foreach(Position port in tick.Map.Ports)
                 if(!tick.VisitedPortIndices.Contains(tick.Map.Ports.IndexOf(port)))
                     if (tick.CurrentLocation.Column == port.Column && tick.CurrentLocation.Row == port.Row)
