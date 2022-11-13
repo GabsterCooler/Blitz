@@ -25,5 +25,45 @@ namespace Application
                 ? new Move { Kind = MoveKind.Spawn, Position = tick.Map.Ports[0] }
                 : new Move { Kind = MoveKind.Sail, Direction = _directions[tick.CurrentTick % _directions.Count] };
         }
+        
+        public string FindNextMove(Position currentPosition, Position target)
+        {
+           if(currentPosition.Row < target.Row && currentPosition.Column < target.Column)
+           {
+                return "SE";
+           }
+           else if (currentPosition.Row < target.Row && currentPosition.Column > target.Column)
+           {
+                return "SW"
+           }
+           else if (currentPosition.Row > target.Row && currentPosition.Column > target.Column)
+           {
+                return "NW"
+           }
+           else if (currentPosition.Row > target.Row && currentPosition.Column < target.Column)
+           {
+                return "NE"
+           }
+           else if(currentPosition.Row == target.Row && currentPosition.Column < target.Column)
+           {
+                return "E"
+           }
+           else if(currentPosition.Row == target.Row && currentPosition.Column > target.Column)
+           {
+                return "W"
+           }
+           else if(currentPosition.Row < target.Row && currentPosition.Column == target.Column)
+           {
+                return "S"
+           }
+           else if(currentPosition.Row > target.Row && currentPosition.Column == target.Column)
+           {
+                return "N"
+           }
+           else 
+           {
+                return "Arrivé"
+           }
+        }
     }
 }
