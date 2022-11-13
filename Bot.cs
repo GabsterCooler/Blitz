@@ -22,8 +22,26 @@ namespace Application
         public Move GetNextMove(Tick tick)
         {
             return tick.CurrentLocation == null
-                ? new Move { Kind = MoveKind.Spawn, Position = tick.Map.Ports[0] }
+                ? new Move { Kind = MoveKind.Spawn, Position = FindClosestPort(tick.Map.Ports) }
                 : new Move { Kind = MoveKind.Sail, Direction = _directions[tick.CurrentTick % _directions.Count] };
+        }
+
+        private Position FindClosestPort(List<Position> ports)
+        {
+            Position closestPort = new Position();
+            double closestDistance = 0;
+
+            foreach(var direction in ports)
+            {
+                double distance = Math.Sqrt(Math.Pow(direction.Column, 2) + Math.Pow(direction.Row, 2));
+                if(distance < closestDistance || closestDistance == 0)
+                {
+                    closestPort = direction;
+                    closestDistance = distance;
+                }
+            }
+
+            return closestPort;
         }
         
         public string FindNextMove(Position currentPosition, Position target)
