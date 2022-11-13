@@ -21,6 +21,7 @@ namespace Application
         /// </summary>
         public Move GetNextMove(Tick tick)
         {
+<<<<<<< HEAD
             if(tick.CurrentLocation == null)
             {
                 
@@ -31,6 +32,11 @@ namespace Application
                 Position closestPort = FindClosestPort(tick);
                 return FindNextAction(tick.CurrentLocation, closestPort);
             }
+=======
+            return tick.CurrentLocation == null
+                ? new Move { Kind = MoveKind.Spawn, Position = FindWhereToSpawn(tick) }
+                : new Move { Kind = MoveKind.Sail, Direction = _directions[tick.CurrentTick % _directions.Count] };
+>>>>>>> edd5d2243eadd7761f12daee8a90b27a944e13d4
         }
 
         private Position FindClosestPort(Tick tick)
@@ -44,7 +50,7 @@ namespace Application
             foreach(var indexPort in portsVisites)
                 ports.RemoveAt(indexPort);
 
-            Console.WriteLine($"x : {tick.CurrentLocation.Column} et y : {tick.CurrentLocation.Row}")
+            Console.WriteLine($"x : {tick.CurrentLocation.Column} et y : {tick.CurrentLocation.Row}");
 
             foreach(var direction in ports)
             {
@@ -57,6 +63,11 @@ namespace Application
             }
 
             return closestPort;
+        }
+
+        private Position FindWhereToSpawn(Tick tick)
+        {
+            return tick.Map.Ports[0];
         }
 
         public string FindNextMove(Position currentPosition, Position target)
