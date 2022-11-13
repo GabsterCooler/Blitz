@@ -28,6 +28,8 @@ namespace Application
             else
             {
                 Position closestPort = FindClosestPort(tick);
+                Console.WriteLine("Current tick: " + tick.CurrentTick);
+                Console.WriteLine($"x : {closestPort.Column} et y : {closestPort.Row}");
                 return FindNextAction(tick.CurrentLocation, closestPort);
             }
         }
@@ -107,10 +109,12 @@ namespace Application
         {
             if(currentPosition.Row == target.Row && currentPosition.Column == target.Column)
             {
+                Console.WriteLine("Docking!");
                 return new Move { Kind = MoveKind.Dock };
             }
             else
             {
+                Console.WriteLine("Sailing!");
                 return new Move { Kind = MoveKind.Sail, Direction = FindNextMove(currentPosition, target) };
             }
         }
