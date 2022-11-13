@@ -43,7 +43,7 @@ namespace Application
 
             return closestPort;
         }
-        
+
         public string FindNextMove(Position currentPosition, Position target)
         {
            if(currentPosition.Row < target.Row && currentPosition.Column < target.Column)
@@ -52,36 +52,49 @@ namespace Application
            }
            else if (currentPosition.Row < target.Row && currentPosition.Column > target.Column)
            {
-                return "SW"
+                return "SW";
            }
            else if (currentPosition.Row > target.Row && currentPosition.Column > target.Column)
            {
-                return "NW"
+                return "NW";
            }
            else if (currentPosition.Row > target.Row && currentPosition.Column < target.Column)
            {
-                return "NE"
+                return "NE";
            }
            else if(currentPosition.Row == target.Row && currentPosition.Column < target.Column)
            {
-                return "E"
+                return "E";
            }
            else if(currentPosition.Row == target.Row && currentPosition.Column > target.Column)
            {
-                return "W"
+                return "W";
            }
            else if(currentPosition.Row < target.Row && currentPosition.Column == target.Column)
            {
-                return "S"
+                return "S";
            }
            else if(currentPosition.Row > target.Row && currentPosition.Column == target.Column)
            {
-                return "N"
+                return "N";
            }
            else 
            {
-                return "Arrivé"
+                return "Arrivé";
            }
+        }
+
+        public Move FindNextAction(Position currentPosition, Position target)
+        {
+            if(currentPosition.Row == target.Row && currentPosition.Column == target.Column)
+            {
+                return new Move { Kind = MoveKind.Dock };
+                // Après il faut trouver le prochain port à visiter
+            }
+            else
+            {
+                return new Move { Kind = MoveKind.Sail, Direction = FindNextMove(currentPosition, target) };
+            }
         }
     }
 }
