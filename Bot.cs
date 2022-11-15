@@ -12,7 +12,7 @@ namespace Application
 
     public class Bot
     {
-        public const int nbOfPortsAccosted = 11;
+        public const int nbOfPortsAccosted = 16;
         public const string NAME = "MyBot C♭";
         private static readonly List<string> _directions = new List<string>
         {
@@ -41,7 +41,7 @@ namespace Application
                 return FindNextAction(tick, closestPort);
             }
         }
-        
+
         private LinkedListNode<CoordinatedDirections> GetNodeAtIndex(int index, LinkedList<CoordinatedDirections> list) {
             LinkedListNode<CoordinatedDirections> node = list.First;
             for (int i = 0; i < index; i++)
@@ -52,26 +52,25 @@ namespace Application
         private string VerifyMove(int n, Tick tick)
         {
             LinkedList<CoordinatedDirections> directions = new LinkedList<CoordinatedDirections>();
-            directions.AddLast(new CoordinatedDirections { X = 0, Y = 1, Direction = "N"});
-            directions.AddLast(new CoordinatedDirections { X = 1, Y = 1, Direction = "NE"});
+            directions.AddLast(new CoordinatedDirections { X = 0, Y = -1, Direction = "N"});
+            directions.AddLast(new CoordinatedDirections { X = 1, Y = -1, Direction = "NE"});
             directions.AddLast(new CoordinatedDirections { X = 1, Y = 0, Direction = "E"});
-            directions.AddLast(new CoordinatedDirections { X = 1, Y = -1, Direction = "SE"});
-            directions.AddLast(new CoordinatedDirections { X = 0, Y = -1, Direction = "S"});
-            directions.AddLast(new CoordinatedDirections { X = -1, Y = -1, Direction = "SW"});
+            directions.AddLast(new CoordinatedDirections { X = 1, Y = 1, Direction = "SE"});
+            directions.AddLast(new CoordinatedDirections { X = 0, Y = 1, Direction = "S"});
+            directions.AddLast(new CoordinatedDirections { X = -1, Y = 1, Direction = "SW"});
             directions.AddLast(new CoordinatedDirections { X = -1, Y = 0, Direction = "W"});
-            directions.AddLast(new CoordinatedDirections { X = -1, Y = 1, Direction = "NW"});
+            directions.AddLast(new CoordinatedDirections { X = -1, Y = -1, Direction = "NW"});
 
             LinkedListNode<CoordinatedDirections> currentDirection = GetNodeAtIndex(n, directions);
 
             for (int i = 0; i < 8; i++) {
-                if (tick.Map.Topology[tick.CurrentLocation.Row + currentDirection.Value.Y][tick.CurrentLocation.Column + currentDirection.Value.X] < tick.Map.TideLevels.Min)
-                {
+                if (tick.Map.Topology[tick.CurrentLocation.Row + currentDirection.Value.Y][tick.CurrentLocation.Column + currentDirection.Value.X] < tick.Map.TideLevels.Max){
                     return currentDirection.Value.Direction;
                 }
                 currentDirection = currentDirection.Next ?? directions.First;
             }
- 
-            return "E"; // TODO: on est bloqué, direction arbitraire. On devrait mieux gerer, au lieu de retourner "E"
+            
+            return "E"; // TODO: on est bloqué, direction arbitraire
         }
 
         private Position FindClosestPort(Tick tick)
@@ -90,7 +89,7 @@ namespace Application
             Position closestPort = new Position();
             double closestDistance = 0;
 
-            //Console.WriteLine($"x : {tick.CurrentLocation.Column} et y : {tick.CurrentLocation.Row}");
+            Console.WriteLine($"x : {tick.CurrentLocation.Column} et y : {tick.CurrentLocation.Row}");
 
             foreach(var direction in ports)
             {
