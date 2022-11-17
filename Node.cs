@@ -20,7 +20,7 @@ namespace Application
 
         public static float GetTraversalCost(Position from, Position to)
         {
-            return (float)Math.Sqrt(Math.Pow(Math.Abs(from.Column - to.Column), 2) + Math.Pow(Math.Abs(from.Row - to.Row), 2));
+            return 0.4f * (float)Math.Sqrt(Math.Pow(Math.Abs(from.Column - to.Column), 2) + Math.Pow(Math.Abs(from.Row - to.Row), 2));
         }
 
         public Node(int x, int y, bool isSailable, float traversalCost)

@@ -255,7 +255,7 @@ namespace Application
                     }
                     else
                     {
-                        Console.WriteLine("Gtemp not smaller");
+                        Console.WriteLine($"Gtemp not smaller Gtemp: {gTemp}, node.G: {node.G}");
                     }
                 }
                 else
